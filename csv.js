@@ -1,12 +1,29 @@
-const { readFile } = require("fs").promises;
+const { readFile, writeFile } = require("fs").promises;
 const Papa = require("papaparse");
 
+const csvRead = async (csvPath) => {
+    const csvRaw = await readFile(csvPath, "utf-8");
+    return Papa.parse(csvRaw, { header: true });
+}
+
 const csv2json = async (csvPath) => {
-    const csvData = await readFile(csvPath, "utf-8");
-    const result = Papa.parse(csvData, { header: true });
-    return result;
+    return JSON.stringify(await csvRead(csvPath));
+};
+
+const csvWriteRow = async (csvPath, rowIdx, row) => {
+    const csvObj = await csvRead(csvPath);
+    csvObj.data[rowIdx] = row;
+    await writeFile(csvPath, Papa.unparse(csvObj.data));
+};
+
+const csvNewRow = async (csvPath, row) => {
+    const csvObj = await csvRead(csvPath);
+    csvObj.data.push(row);
+    await writeFile(csvPath, Papa.unparse(csvObj.data));
 };
 
 module.exports = {
-    csv2json: csv2json
+    csv2json: csv2json,
+    csvWriteRow: csvWriteRow,
+    csvNewRow: csvNewRow
 };
