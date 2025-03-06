@@ -2,37 +2,40 @@ console.log("I am running!");
 
 let rowStash = [];
 
+const createInputRow = (normalRow) => {
+    const rowLength = normalRow.children.length;
+    const newRowElem = document.createElement("tr");
+    for (let i = 0; i < rowLength - 1; ++i) {
+        const tdElem = normalRow.children[i];
+
+        const inputElem = document.createElement("input");
+        const newTdElem = document.createElement("td");
+        inputElem.type = "text";
+        inputElem.value = tdElem.textContent;
+
+        newTdElem.appendChild(inputElem);
+        newRowElem.appendChild(newTdElem);
+    }
+
+    const confirmBtnElem = document.createElement("button");
+    confirmBtnElem.textContent = "确认";
+
+    const cancelBtnElem = document.createElement("button");
+    cancelBtnElem.textContent = "取消";
+
+    newRowElem.appendChild(confirmBtnElem);
+    newRowElem.appendChild(cancelBtnElem);
+    return newRowElem;
+};
+
 const editClick = (idx) => {
     return (event) => {
         if (event.button !== 0) return;
-        /*const btnElem = event.target;
+        const btnElem = event.target;
         const rowElem = btnElem.parentElement.parentElement;
 
-        const rowLength = rowElem.children.length;
-        for (let i = 0; i < rowLength - 1; ++i) {
-            const elem = rowElem.children[i];
-
-            const inputElem = document.createElement("input");
-            inputElem.type = "text";
-            inputElem.value = elem.textContent;
-
-            elem.textContent = "";
-            elem.appendChild(inputElem);
-        }
-
-        const lastTdElem = rowElem.children[rowLength - 1];
-
-        const confirmBtnElem = document.createElement("button");
-        confirmBtnElem.textContent = "确认";
-
-        const cancelBtnElem = document.createElement("button");
-        cancelBtnElem.textContent = "取消";
-
-        btnElem.innerHTML = "";
-        lastTdElem.appendChild(confirmBtnElem);
-        lastTdElem.appendChild(cancelBtnElem);*/
-        console.log(`Row ${idx} was clicked!`);
-        console.log(rowStash.length);
+        rowStash[idx] = rowElem;
+        rowElem.parentElement.replaceChild(createInputRow(rowElem), rowElem);
     }
 };
 
