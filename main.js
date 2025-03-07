@@ -1,5 +1,5 @@
 const express = require("express");
-const { csv2json, csvNewRow, csvWriteRow } = require("./csv");
+const { csv2json, csvNewRow, csvWriteRow, csvDelRow } = require("./csv");
 
 const app = express();
 const csvPath = "./test.csv";
@@ -28,6 +28,10 @@ app.post("/api/setsheet/*", async (req, res) => {
         case "newrow":
             csvNewRow(csvPath, json["row"]);
             res.status(200).send("New row succeeded");
+            break;
+        case "delrow":
+            csvDelRow(csvPath, json["rowIdx"]);
+            res.status(200).send("Del row succeeded");
             break;
         default:
             res.status(404).send("Invalid API");

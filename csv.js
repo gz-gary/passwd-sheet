@@ -22,8 +22,15 @@ const csvNewRow = async (csvPath, row) => {
     await writeFile(csvPath, Papa.unparse(csvObj.data));
 };
 
+const csvDelRow = async (csvPath, rowIdx) => {
+    const csvObj = await csvRead(csvPath);
+    csvObj.data.splice(rowIdx, 1);
+    await writeFile(csvPath, Papa.unparse(csvObj.data));
+};
+
 module.exports = {
     csv2json: csv2json,
     csvWriteRow: csvWriteRow,
-    csvNewRow: csvNewRow
+    csvNewRow: csvNewRow,
+    csvDelRow: csvDelRow
 };
