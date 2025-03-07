@@ -19,14 +19,14 @@ app.get("/api/getsheet", async (req, res) => {
 
 app.post("/api/setsheet/*", async (req, res) => {
     try {
+        const json = req.body;
         switch (req.params[0]) {
         case "writerow":
-            const json = req.body;
             csvWriteRow(csvPath, json["rowIdx"], json["row"]);
             res.status(200).send("Write row succeeded");
             break;
         case "newrow":
-            csvNewRow(csvPath, req.json["row"]);
+            csvNewRow(csvPath, json["row"]);
             res.status(200).send("New row succeeded");
             break;
         default:
