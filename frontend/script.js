@@ -279,9 +279,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const rowElem = document.createElement("tr");
                 tableBody.appendChild(rowElem);
 
-                for (let entry of Object.entries(row)) {
+                const entries = Object.entries(row);
+                for (let j = 0; j < fields.length; ++j) {
                     const colElem = document.createElement("td");
-                    colElem.textContent = entry[1];
+                    colElem.textContent = entries[j][1];
                     rowElem.appendChild(colElem);
                 }
 
