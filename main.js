@@ -1,4 +1,5 @@
 const express = require("express");
+const basicAuth = require('express-basic-auth');
 const { csv2json, csvNewRow, csvWriteRow, csvDelRow } = require("./csv");
 
 const app = express();
@@ -6,6 +7,12 @@ const csvPath = "./test.csv";
 
 app.use(express.json())
 app.use(express.static("frontend"));
+
+app.use(basicAuth({
+    users: { 'admin': 'passwd' },
+    challenge: true,
+    unauthorizedResponse: 'Unauthorized'
+}));
 
 app.get("/api/getsheet", async (req, res) => {
     try {
