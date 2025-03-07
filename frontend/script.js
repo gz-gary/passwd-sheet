@@ -282,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const entries = Object.entries(row);
                 for (let j = 0; j < fields.length; ++j) {
                     const colElem = document.createElement("td");
-                    colElem.textContent = entries[j][1];
+                    colElem.textContent = entries[j] != undefined ? entries[j][1] : "";
                     rowElem.appendChild(colElem);
                 }
 
