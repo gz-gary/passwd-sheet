@@ -102,7 +102,6 @@ const confirm = (event) => {
                     if (i >= fields.length) return;
                     td.textContent = row.children[i].firstChild.value;
                 });
-                console.log(rowStash);
             } else throw new Error("Network response was not ok");
             /* resume row edited */
             row.parentElement.replaceChild(rowStash, row);
